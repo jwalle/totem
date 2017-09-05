@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Starter kit pour test technique fullstack Javascript",
   "author": "Totem / Ingima",
-  "engines" : {
-    "node" : "6.9.4",
+  "engines": {
+    "node": "6.9.4",
     "npm": "3.10.10"
   },
   "scripts": {
@@ -14,13 +14,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.2",
     "bootstrap": "3.3.6",
     "compression": "1.6.1",
     "express": "4.13.4",
     "jquery": "2.2.3",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "react-router": "3.0.0"
+    "react-router": "3.0.0",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "babel-core": "6.21.0",

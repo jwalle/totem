@@ -13,9 +13,12 @@ module.exports = {
   module : {
     loaders : [
       {
-        test : /\.jsx?/,
-        include : APP_DIR,
-        loader : 'babel'
+        test: /\.jsx?/,
+        include: APP_DIR,
+        loader: 'babel',
+		query: {
+			presets: ['es2015', 'react']
+		}
       }
     ]
   }
