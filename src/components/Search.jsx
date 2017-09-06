@@ -7,28 +7,16 @@ class Search extends React.Component {
         super(props);
 
         this.state = {
-            post: []
+            post: [],
+            token: null
         };
     }
 
     // componentWillMount() {
-    //     let myID = '09f12c7365f84dcd886d04fdb5b1c590';
-    //     let myCallback = 'http://localhost:3000/callback';
-    //     console.log('coucou1');
     //
-    //     // let url = "http://www.reddit.com/r/nodejs.json";
-    //     let url = "https://api.spotify.com/v1/search?q=tania%20bowra&type=artist";
-    //     // let url = 'http://www.omdbapi.com?s=star&y=&r=json&plot=short';
-    //     axios.get(url).then(res => {
-    //             this.setState({
-    //                 post : res
-    //                 // total : data.body.totalResults
-    //             });
-    //         });
     // }
 
     render() {
-        // console.log(this.state.post);
         return (
         <div>
                 <div className='container'>

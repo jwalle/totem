@@ -69,15 +69,18 @@
 	
 	var _Search2 = _interopRequireDefault(_Search);
 	
-	var _Artist = __webpack_require__(/*! ./components/Artist.jsx */ 236);
+	var _Artist = __webpack_require__(/*! ./components/Artist.jsx */ 262);
 	
 	var _Artist2 = _interopRequireDefault(_Artist);
 	
-	var _Album = __webpack_require__(/*! ./components/Album.jsx */ 237);
+	var _Album = __webpack_require__(/*! ./components/Album.jsx */ 263);
 	
 	var _Album2 = _interopRequireDefault(_Album);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import Login from './components/login.jsx';
+	
 	
 	// import DemoPage from './components/DemoPage.jsx';
 	(0, _reactDom.render)(_react2.default.createElement(
@@ -25373,9 +25376,9 @@
 
 /***/ },
 /* 211 */
-/*!*********************************!*\
-  !*** ./~/query-string/index.js ***!
-  \*********************************/
+/*!*******************************************!*\
+  !*** ./~/history/~/query-string/index.js ***!
+  \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27393,7 +27396,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(/*! axios */ 238);
+	var _axios = __webpack_require__(/*! axios */ 236);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -27416,31 +27419,19 @@
 	        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 	
 	        _this.state = {
-	            post: []
+	            post: [],
+	            token: null
 	        };
 	        return _this;
 	    }
 	
 	    // componentWillMount() {
-	    //     let myID = '09f12c7365f84dcd886d04fdb5b1c590';
-	    //     let myCallback = 'http://localhost:3000/callback';
-	    //     console.log('coucou1');
 	    //
-	    //     // let url = "http://www.reddit.com/r/nodejs.json";
-	    //     let url = "https://api.spotify.com/v1/search?q=tania%20bowra&type=artist";
-	    //     // let url = 'http://www.omdbapi.com?s=star&y=&r=json&plot=short';
-	    //     axios.get(url).then(res => {
-	    //             this.setState({
-	    //                 post : res
-	    //                 // total : data.body.totalResults
-	    //             });
-	    //         });
 	    // }
 	
 	    _createClass(Search, [{
 	        key: 'render',
 	        value: function render() {
-	            // console.log(this.state.post);
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -27643,437 +27634,15 @@
 
 /***/ },
 /* 236 */
-/*!***********************************!*\
-  !*** ./src/components/Artist.jsx ***!
-  \***********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Artist = function (_React$Component) {
-	    _inherits(Artist, _React$Component);
-	
-	    function Artist() {
-	        _classCallCheck(this, Artist);
-	
-	        return _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).apply(this, arguments));
-	    }
-	
-	    _createClass(Artist, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'container' },
-	                _react2.default.createElement(
-	                    'ol',
-	                    { className: 'breadcrumb' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '/' },
-	                            'Recherche'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { className: 'active' },
-	                        'Artist'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'page-header' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        'Albums'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        'Artist'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container albums' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Artist;
-	}(_react2.default.Component);
-	
-	exports.default = Artist;
-
-/***/ },
-/* 237 */
-/*!**********************************!*\
-  !*** ./src/components/Album.jsx ***!
-  \**********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Album = function (_React$Component) {
-	    _inherits(Album, _React$Component);
-	
-	    function Album() {
-	        _classCallCheck(this, Album);
-	
-	        return _possibleConstructorReturn(this, (Album.__proto__ || Object.getPrototypeOf(Album)).apply(this, arguments));
-	    }
-	
-	    _createClass(Album, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'container' },
-	                _react2.default.createElement(
-	                    'ol',
-	                    { className: 'breadcrumb' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '/' },
-	                            'Recherche'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#' },
-	                            'Artist'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { className: 'active' },
-	                        'Album'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'page-header' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        'Pistes'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        'Artist',
-	                        ' - ',
-	                        'Album'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-12 col-md-6 col-lg-6' },
-	                        _react2.default.createElement('img', { src: 'http://placehold.it/640x640', className: 'thumbnail img-responsive', alt: 'Album name' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-12 col-md-6 col-lg-6' },
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'list-group' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'list-group-item' },
-	                                '#. Track name ',
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'badge' },
-	                                    '00:00'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Album;
-	}(_react2.default.Component);
-	
-	exports.default = Album;
-
-/***/ },
-/* 238 */
 /*!**************************!*\
   !*** ./~/axios/index.js ***!
   \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/axios */ 239);
+	module.exports = __webpack_require__(/*! ./lib/axios */ 237);
 
 /***/ },
-/* 239 */
+/* 237 */
 /*!******************************!*\
   !*** ./~/axios/lib/axios.js ***!
   \******************************/
@@ -28081,10 +27650,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 240);
-	var bind = __webpack_require__(/*! ./helpers/bind */ 241);
-	var Axios = __webpack_require__(/*! ./core/Axios */ 243);
-	var defaults = __webpack_require__(/*! ./defaults */ 244);
+	var utils = __webpack_require__(/*! ./utils */ 238);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 239);
+	var Axios = __webpack_require__(/*! ./core/Axios */ 241);
+	var defaults = __webpack_require__(/*! ./defaults */ 242);
 	
 	/**
 	 * Create an instance of Axios
@@ -28117,15 +27686,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 261);
-	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 262);
-	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 258);
+	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 259);
+	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 260);
+	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 256);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(/*! ./helpers/spread */ 263);
+	axios.spread = __webpack_require__(/*! ./helpers/spread */ 261);
 	
 	module.exports = axios;
 	
@@ -28134,7 +27703,7 @@
 
 
 /***/ },
-/* 240 */
+/* 238 */
 /*!******************************!*\
   !*** ./~/axios/lib/utils.js ***!
   \******************************/
@@ -28142,8 +27711,8 @@
 
 	'use strict';
 	
-	var bind = __webpack_require__(/*! ./helpers/bind */ 241);
-	var isBuffer = __webpack_require__(/*! is-buffer */ 242);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 239);
+	var isBuffer = __webpack_require__(/*! is-buffer */ 240);
 	
 	/*global toString:true*/
 	
@@ -28446,7 +28015,7 @@
 
 
 /***/ },
-/* 241 */
+/* 239 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/bind.js ***!
   \*************************************/
@@ -28466,7 +28035,7 @@
 
 
 /***/ },
-/* 242 */
+/* 240 */
 /*!******************************!*\
   !*** ./~/is-buffer/index.js ***!
   \******************************/
@@ -28496,7 +28065,7 @@
 
 
 /***/ },
-/* 243 */
+/* 241 */
 /*!***********************************!*\
   !*** ./~/axios/lib/core/Axios.js ***!
   \***********************************/
@@ -28504,12 +28073,12 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(/*! ./../defaults */ 244);
-	var utils = __webpack_require__(/*! ./../utils */ 240);
-	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 255);
-	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 256);
-	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 259);
-	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 260);
+	var defaults = __webpack_require__(/*! ./../defaults */ 242);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 253);
+	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 254);
+	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 257);
+	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 258);
 	
 	/**
 	 * Create a new instance of Axios
@@ -28591,7 +28160,7 @@
 
 
 /***/ },
-/* 244 */
+/* 242 */
 /*!*********************************!*\
   !*** ./~/axios/lib/defaults.js ***!
   \*********************************/
@@ -28599,8 +28168,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 240);
-	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 245);
+	var utils = __webpack_require__(/*! ./utils */ 238);
+	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 243);
 	
 	var DEFAULT_CONTENT_TYPE = {
 	  'Content-Type': 'application/x-www-form-urlencoded'
@@ -28616,10 +28185,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(/*! ./adapters/xhr */ 246);
+	    adapter = __webpack_require__(/*! ./adapters/xhr */ 244);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(/*! ./adapters/http */ 246);
+	    adapter = __webpack_require__(/*! ./adapters/http */ 244);
 	  }
 	  return adapter;
 	}
@@ -28693,7 +28262,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../process/browser.js */ 3)))
 
 /***/ },
-/* 245 */
+/* 243 */
 /*!****************************************************!*\
   !*** ./~/axios/lib/helpers/normalizeHeaderName.js ***!
   \****************************************************/
@@ -28701,7 +28270,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ../utils */ 240);
+	var utils = __webpack_require__(/*! ../utils */ 238);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -28714,7 +28283,7 @@
 
 
 /***/ },
-/* 246 */
+/* 244 */
 /*!*************************************!*\
   !*** ./~/axios/lib/adapters/xhr.js ***!
   \*************************************/
@@ -28722,13 +28291,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
-	var settle = __webpack_require__(/*! ./../core/settle */ 247);
-	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 250);
-	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 251);
-	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 252);
-	var createError = __webpack_require__(/*! ../core/createError */ 248);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 253);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var settle = __webpack_require__(/*! ./../core/settle */ 245);
+	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 248);
+	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 249);
+	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 250);
+	var createError = __webpack_require__(/*! ../core/createError */ 246);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 251);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -28825,7 +28394,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 254);
+	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 252);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -28904,7 +28473,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../process/browser.js */ 3)))
 
 /***/ },
-/* 247 */
+/* 245 */
 /*!************************************!*\
   !*** ./~/axios/lib/core/settle.js ***!
   \************************************/
@@ -28912,7 +28481,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(/*! ./createError */ 248);
+	var createError = __webpack_require__(/*! ./createError */ 246);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -28939,7 +28508,7 @@
 
 
 /***/ },
-/* 248 */
+/* 246 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/core/createError.js ***!
   \*****************************************/
@@ -28947,7 +28516,7 @@
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(/*! ./enhanceError */ 249);
+	var enhanceError = __webpack_require__(/*! ./enhanceError */ 247);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, request and response.
@@ -28966,7 +28535,7 @@
 
 
 /***/ },
-/* 249 */
+/* 247 */
 /*!******************************************!*\
   !*** ./~/axios/lib/core/enhanceError.js ***!
   \******************************************/
@@ -28996,7 +28565,7 @@
 
 
 /***/ },
-/* 250 */
+/* 248 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/helpers/buildURL.js ***!
   \*****************************************/
@@ -29004,7 +28573,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -29073,7 +28642,7 @@
 
 
 /***/ },
-/* 251 */
+/* 249 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/helpers/parseHeaders.js ***!
   \*********************************************/
@@ -29081,7 +28650,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
 	
 	/**
 	 * Parse headers into an object
@@ -29119,7 +28688,7 @@
 
 
 /***/ },
-/* 252 */
+/* 250 */
 /*!************************************************!*\
   !*** ./~/axios/lib/helpers/isURLSameOrigin.js ***!
   \************************************************/
@@ -29127,7 +28696,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -29196,7 +28765,7 @@
 
 
 /***/ },
-/* 253 */
+/* 251 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/btoa.js ***!
   \*************************************/
@@ -29241,7 +28810,7 @@
 
 
 /***/ },
-/* 254 */
+/* 252 */
 /*!****************************************!*\
   !*** ./~/axios/lib/helpers/cookies.js ***!
   \****************************************/
@@ -29249,7 +28818,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -29303,7 +28872,7 @@
 
 
 /***/ },
-/* 255 */
+/* 253 */
 /*!************************************************!*\
   !*** ./~/axios/lib/core/InterceptorManager.js ***!
   \************************************************/
@@ -29311,7 +28880,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -29364,7 +28933,7 @@
 
 
 /***/ },
-/* 256 */
+/* 254 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/core/dispatchRequest.js ***!
   \*********************************************/
@@ -29372,10 +28941,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
-	var transformData = __webpack_require__(/*! ./transformData */ 257);
-	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 258);
-	var defaults = __webpack_require__(/*! ../defaults */ 244);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var transformData = __webpack_require__(/*! ./transformData */ 255);
+	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 256);
+	var defaults = __webpack_require__(/*! ../defaults */ 242);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -29452,7 +29021,7 @@
 
 
 /***/ },
-/* 257 */
+/* 255 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/core/transformData.js ***!
   \*******************************************/
@@ -29460,7 +29029,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 240);
+	var utils = __webpack_require__(/*! ./../utils */ 238);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -29481,7 +29050,7 @@
 
 
 /***/ },
-/* 258 */
+/* 256 */
 /*!****************************************!*\
   !*** ./~/axios/lib/cancel/isCancel.js ***!
   \****************************************/
@@ -29495,7 +29064,7 @@
 
 
 /***/ },
-/* 259 */
+/* 257 */
 /*!**********************************************!*\
   !*** ./~/axios/lib/helpers/isAbsoluteURL.js ***!
   \**********************************************/
@@ -29518,7 +29087,7 @@
 
 
 /***/ },
-/* 260 */
+/* 258 */
 /*!********************************************!*\
   !*** ./~/axios/lib/helpers/combineURLs.js ***!
   \********************************************/
@@ -29541,7 +29110,7 @@
 
 
 /***/ },
-/* 261 */
+/* 259 */
 /*!**************************************!*\
   !*** ./~/axios/lib/cancel/Cancel.js ***!
   \**************************************/
@@ -29569,7 +29138,7 @@
 
 
 /***/ },
-/* 262 */
+/* 260 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/cancel/CancelToken.js ***!
   \*******************************************/
@@ -29577,7 +29146,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(/*! ./Cancel */ 261);
+	var Cancel = __webpack_require__(/*! ./Cancel */ 259);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -29635,7 +29204,7 @@
 
 
 /***/ },
-/* 263 */
+/* 261 */
 /*!***************************************!*\
   !*** ./~/axios/lib/helpers/spread.js ***!
   \***************************************/
@@ -29669,6 +29238,428 @@
 	  };
 	};
 
+
+/***/ },
+/* 262 */
+/*!***********************************!*\
+  !*** ./src/components/Artist.jsx ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Artist = function (_React$Component) {
+	    _inherits(Artist, _React$Component);
+	
+	    function Artist() {
+	        _classCallCheck(this, Artist);
+	
+	        return _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).apply(this, arguments));
+	    }
+	
+	    _createClass(Artist, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'ol',
+	                    { className: 'breadcrumb' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '/' },
+	                            'Recherche'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { className: 'active' },
+	                        'Artist'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'page-header' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        'Albums'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        'Artist'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container albums' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'thumbnail text-center' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#' },
+	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'caption' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'Album name'
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'thumbnail text-center' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#' },
+	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'caption' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'Album name'
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'thumbnail text-center' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#' },
+	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'caption' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'Album name'
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'thumbnail text-center' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#' },
+	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'caption' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'Album name'
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'thumbnail text-center' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#' },
+	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'caption' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'Album name'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Artist;
+	}(_react2.default.Component);
+	
+	exports.default = Artist;
+
+/***/ },
+/* 263 */
+/*!**********************************!*\
+  !*** ./src/components/Album.jsx ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Album = function (_React$Component) {
+	    _inherits(Album, _React$Component);
+	
+	    function Album() {
+	        _classCallCheck(this, Album);
+	
+	        return _possibleConstructorReturn(this, (Album.__proto__ || Object.getPrototypeOf(Album)).apply(this, arguments));
+	    }
+	
+	    _createClass(Album, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'ol',
+	                    { className: 'breadcrumb' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '/' },
+	                            'Recherche'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#' },
+	                            'Artist'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { className: 'active' },
+	                        'Album'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'page-header' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        'Pistes'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        'Artist',
+	                        ' - ',
+	                        'Album'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-md-6 col-lg-6' },
+	                        _react2.default.createElement('img', { src: 'http://placehold.it/640x640', className: 'thumbnail img-responsive', alt: 'Album name' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-xs-12 col-md-6 col-lg-6' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            { className: 'list-group' },
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'list-group-item' },
+	                                '#. Track name ',
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'badge' },
+	                                    '00:00'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Album;
+	}(_react2.default.Component);
+	
+	exports.default = Album;
 
 /***/ }
 /******/ ]);
