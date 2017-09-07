@@ -29258,6 +29258,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _axios = __webpack_require__(/*! axios */ 236);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29269,13 +29273,65 @@
 	var Artist = function (_React$Component) {
 	    _inherits(Artist, _React$Component);
 	
-	    function Artist() {
+	    function Artist(props) {
 	        _classCallCheck(this, Artist);
 	
-	        return _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).call(this, props));
+	
+	        _this.state = {
+	            artist: [],
+	            albums: []
+	        };
+	        _this.getArtist = _this.getArtist.bind(_this);
+	        _this.getAlbums = _this.getAlbums.bind(_this);
+	        return _this;
 	    }
 	
 	    _createClass(Artist, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.getArtist();
+	        }
+	    }, {
+	        key: 'getArtist',
+	        value: function getArtist() {
+	            var _this2 = this;
+	
+	            _axios2.default.get('/getArtist').then(function (res) {
+	                var artist = res.data;
+	                _this2.setState({ artist: artist });
+	            }).catch(function (err) {
+	                return console.log('artist error :' + err);
+	            });
+	        }
+	    }, {
+	        key: 'getAlbums',
+	        value: function getAlbums() {
+	            _axios2.default.get('/getAlbums/' + this.state.artist.id)
+	            // .then(res => this.setState({ albums : res.data}))
+	            .then(function (res) {
+	                return console.log(res);
+	            })
+	            // .then(res => console.log(artistID))
+	            .catch(function (err) {
+	                return console.log('albums error :' + err + artist);
+	            });
+	        }
+	
+	        // listAlbums = this.state.albums.map((albums) =>
+	        // <div className='col-xs-12 col-sm-4 col-md-4 col-lg-3'>
+	        //     <div className='thumbnail text-center'>
+	        //         <a href='#'>
+	        //             <img src={'http://placehold.it/300x300'} alt={ 'Album name' } />
+	        //         </a>
+	        //         <div className='caption'>
+	        //             <h4>{ 'Album name' }</h4>
+	        //         </div>
+	        //     </div>
+	        // </div>
+	        // );
+	
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -29296,7 +29352,7 @@
 	                    _react2.default.createElement(
 	                        'li',
 	                        { className: 'active' },
-	                        'Artist'
+	                        this.state.artist.id
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -29310,7 +29366,7 @@
 	                    _react2.default.createElement(
 	                        'h2',
 	                        null,
-	                        'Artist'
+	                        this.state.artist.name
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -29320,114 +29376,9 @@
 	                        'div',
 	                        { className: 'row' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-sm-4 col-md-4 col-lg-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'thumbnail text-center' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('img', { src: 'http://placehold.it/300x300', alt: 'Album name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'caption' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'Album name'
-	                                    )
-	                                )
-	                            )
+	                            'ul',
+	                            null,
+	                            this.listAlbums
 	                        )
 	                    )
 	                )
