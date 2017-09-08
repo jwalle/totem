@@ -14,7 +14,7 @@ class Artist extends React.Component {
     }
 
     componentWillMount() {
-        this.getArtist();
+      //  this.getArtist();
     }
 
     getArtist() {

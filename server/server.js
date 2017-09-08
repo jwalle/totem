@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const request = require('request');
 const cookieParser = require('cookie-parser');
-var querystring = require('querystring');
 
 /* eslint-disable no-console */
 
@@ -15,9 +14,7 @@ app.use(express.static(path.join( __dirname, '../public')))
 let client_id = '09f12c7365f84dcd886d04fdb5b1c590';
 let client_secret = 'b09b2f6c67884060ac98346ca8bd8427'; //TODO hide this
 let redirect_uri = 'http://localhost:3000/'; // Your redirect uri
-// const token = getToken();
 
-console.log('COCOUC');
 
 function getToken() {
     return new Promise(function(resolve, error)
@@ -36,8 +33,7 @@ function getToken() {
             if (!error && response.statusCode === 200) {
                 resolve(body.access_token);
             }
-            else
-            {
+            else {
                 error("error");
             }
         });
@@ -49,21 +45,14 @@ function getToken() {
 app.get('/getArtist', function (req, res) {
     getToken()
         .then(function (response) { //catch errors
-            var token = response;
-            console.log(response);
-            // console.log('token in artist:' + token);
-            // console.log('GET RTIST');
             var options = {
                 url: 'https://api.spotify.com/v1/artists/6wWVKhxIU2cEi0K81v7HvP',
-                // url: 'https://api.spotify.com/v1/search?q=rammstein&type=artist',
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + response
                 },
                 json: true
             };
-
             request.get(options, function (error, response, body) {
-                console.log(body);
                 res.send(body);
             });
         });
@@ -71,19 +60,34 @@ app.get('/getArtist', function (req, res) {
 
 app.get('/getAlbums/:id', function (req, res) {
     getToken().then(function(response){
-        console.log('COUCOU TU ES DANS GET ALBUMS');
-        var token = response;
         var options = {
             url: 'https://api.spotify.com/v1/artists/' + req.params.id + '/albums',
-            // url: 'https://api.spotify.com/v1/search?q=rammstein&type=artist',
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + response
             },
             json: true
         };
-        console.log('URL : ' + options.url);
         request.get(options, function(error, response, body) {
-        //    console.log(body);
+            res.send(body);
+        });
+    });
+});
+
+app.get('/search', function (req, res) {
+    console.log(req.query.q);
+    getToken().then(function(response){
+        var options = {
+            url: 'https://api.spotify.com/v1/search?q=' + req.query.q + '&type=artist',
+      //       data: {
+            //     query: req.query.q,
+            //     type : 'artist'
+            // },
+            headers: {
+                'Authorization': 'Bearer ' + response
+            },
+            json: true
+        };
+        request.get(options, function(error, response, body) {
             res.send(body);
         });
     });

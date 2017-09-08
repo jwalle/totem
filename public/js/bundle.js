@@ -69,7 +69,7 @@
 	
 	var _Search2 = _interopRequireDefault(_Search);
 	
-	var _Artist = __webpack_require__(/*! ./components/Artist.jsx */ 262);
+	var _Artist = __webpack_require__(/*! ./components/Artist.jsx */ 236);
 	
 	var _Artist2 = _interopRequireDefault(_Artist);
 	
@@ -27396,7 +27396,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(/*! axios */ 236);
+	var _axios = __webpack_require__(/*! axios */ 237);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -27419,26 +27419,58 @@
 	        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 	
 	        _this.state = {
-	            post: [],
-	            token: null
+	            artists: [],
+	            search: ''
 	        };
+	        _this.handleChange = _this.handleChange.bind(_this);
 	        return _this;
 	    }
 	
-	    // componentWillMount() {
-	    //
-	    // }
+	    //  componentWillMount() {
+	    // this.getArtists();
+	    //  }
 	
 	    _createClass(Search, [{
+	        key: 'handleChange',
+	        value: function handleChange(e) {
+	            console.log(e.target.value);
+	            var search = e.target.value;
+	            this.setState({ search: search });
+	            var self = this;
+	            (0, _axios2.default)({
+	                method: 'get',
+	                url: '/search/?q=' + search,
+	                responseType: 'json'
+	            }).then(function (response) {
+	                var artists = response.data.artists.items;
+	                // console.log(response.data);
+	                self.setState({ artists: artists });
+	            }).catch(function (err) {
+	                return console.log('search error :' + err);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            console.log(this.state.artists);
+	            // console.log(this.state.artists['items']);
+	            // console.log(this.state.artists.items);
+	            // let elements = this.state.artists;
 	            return _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'container' },
-	                    _react2.default.createElement('div', { className: 'page-header' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'page-header' },
+	                        _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'Artistes'
+	                        )
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'panel panel-default' },
@@ -27456,7 +27488,13 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'form-group' },
-	                                    _react2.default.createElement('input', { type: 'search', className: 'form-control', placeholder: 'Mot(s)-cl\xE9(s)' })
+	                                    _react2.default.createElement('input', {
+	                                        type: 'search',
+	                                        className: 'form-control',
+	                                        placeholder: 'Mot(s)-cl\xE9(s)',
+	                                        onChange: this.handleChange,
+	                                        value: this.state.search
+	                                    })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'button',
@@ -27470,29 +27508,35 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'container artists' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'media' },
-	                        _react2.default.createElement(
+	                    this.state.artists.map(function (element, index) {
+	                        console.log(element.images);
+	                        return _react2.default.createElement(
 	                            'div',
-	                            { className: 'media-left' },
+	                            { className: 'media' },
 	                            _react2.default.createElement(
-	                                'a',
-	                                { href: '#' },
-	                                _react2.default.createElement('img', { className: 'media-object', src: 'http://placehold.it/64x64', alt: '*' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'media-body' },
-	                            _react2.default.createElement(
-	                                'h4',
-	                                { className: 'media-heading' },
-	                                'Artist name'
+	                                'div',
+	                                { className: 'media-left' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '/artist/' + element.id },
+	                                    _react2.default.createElement('img', {
+	                                        className: 'media-object',
+	                                        src: element.images[3] ? element.images[3].url : 'http://placehold.it/64x64',
+	                                        alt: '*' })
+	                                )
 	                            ),
-	                            'Artist genres'
-	                        )
-	                    ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'media-body' },
+	                                _react2.default.createElement(
+	                                    'h4',
+	                                    { className: 'media-heading' },
+	                                    element.name
+	                                ),
+	                                'Artist genres'
+	                            )
+	                        );
+	                    }),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'media' },
@@ -27634,15 +27678,167 @@
 
 /***/ },
 /* 236 */
+/*!***********************************!*\
+  !*** ./src/components/Artist.jsx ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _axios = __webpack_require__(/*! axios */ 237);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Artist = function (_React$Component) {
+	    _inherits(Artist, _React$Component);
+	
+	    function Artist(props) {
+	        _classCallCheck(this, Artist);
+	
+	        var _this = _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).call(this, props));
+	
+	        _this.state = {
+	            artist: [],
+	            albums: []
+	        };
+	        _this.getArtist = _this.getArtist.bind(_this);
+	        _this.getAlbums = _this.getAlbums.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Artist, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            //  this.getArtist();
+	        }
+	    }, {
+	        key: 'getArtist',
+	        value: function getArtist() {
+	            var _this2 = this;
+	
+	            _axios2.default.get('/getArtist').then(function (res) {
+	                var artist = res.data;
+	                _this2.setState({ artist: artist });
+	            }).catch(function (err) {
+	                return console.log('artist error :' + err);
+	            });
+	        }
+	    }, {
+	        key: 'getAlbums',
+	        value: function getAlbums() {
+	            _axios2.default.get('/getAlbums/' + this.state.artist.id)
+	            // .then(res => this.setState({ albums : res.data}))
+	            .then(function (res) {
+	                return console.log(res);
+	            })
+	            // .then(res => console.log(artistID))
+	            .catch(function (err) {
+	                return console.log('albums error :' + err + artist);
+	            });
+	        }
+	
+	        // listAlbums = this.state.albums.map((albums) =>
+	        // <div className='col-xs-12 col-sm-4 col-md-4 col-lg-3'>
+	        //     <div className='thumbnail text-center'>
+	        //         <a href='#'>
+	        //             <img src={'http://placehold.it/300x300'} alt={ 'Album name' } />
+	        //         </a>
+	        //         <div className='caption'>
+	        //             <h4>{ 'Album name' }</h4>
+	        //         </div>
+	        //     </div>
+	        // </div>
+	        // );
+	
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'ol',
+	                    { className: 'breadcrumb' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '/' },
+	                            'Recherche'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { className: 'active' },
+	                        this.state.artist.id
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'page-header' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        'Albums'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        this.state.artist.name
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container albums' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            this.listAlbums
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Artist;
+	}(_react2.default.Component);
+	
+	exports.default = Artist;
+
+/***/ },
+/* 237 */
 /*!**************************!*\
   !*** ./~/axios/index.js ***!
   \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/axios */ 237);
+	module.exports = __webpack_require__(/*! ./lib/axios */ 238);
 
 /***/ },
-/* 237 */
+/* 238 */
 /*!******************************!*\
   !*** ./~/axios/lib/axios.js ***!
   \******************************/
@@ -27650,10 +27846,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 238);
-	var bind = __webpack_require__(/*! ./helpers/bind */ 239);
-	var Axios = __webpack_require__(/*! ./core/Axios */ 241);
-	var defaults = __webpack_require__(/*! ./defaults */ 242);
+	var utils = __webpack_require__(/*! ./utils */ 239);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 240);
+	var Axios = __webpack_require__(/*! ./core/Axios */ 242);
+	var defaults = __webpack_require__(/*! ./defaults */ 243);
 	
 	/**
 	 * Create an instance of Axios
@@ -27686,15 +27882,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 259);
-	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 260);
-	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 256);
+	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 260);
+	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 261);
+	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 257);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(/*! ./helpers/spread */ 261);
+	axios.spread = __webpack_require__(/*! ./helpers/spread */ 262);
 	
 	module.exports = axios;
 	
@@ -27703,7 +27899,7 @@
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /*!******************************!*\
   !*** ./~/axios/lib/utils.js ***!
   \******************************/
@@ -27711,8 +27907,8 @@
 
 	'use strict';
 	
-	var bind = __webpack_require__(/*! ./helpers/bind */ 239);
-	var isBuffer = __webpack_require__(/*! is-buffer */ 240);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 240);
+	var isBuffer = __webpack_require__(/*! is-buffer */ 241);
 	
 	/*global toString:true*/
 	
@@ -28015,7 +28211,7 @@
 
 
 /***/ },
-/* 239 */
+/* 240 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/bind.js ***!
   \*************************************/
@@ -28035,7 +28231,7 @@
 
 
 /***/ },
-/* 240 */
+/* 241 */
 /*!******************************!*\
   !*** ./~/is-buffer/index.js ***!
   \******************************/
@@ -28065,7 +28261,7 @@
 
 
 /***/ },
-/* 241 */
+/* 242 */
 /*!***********************************!*\
   !*** ./~/axios/lib/core/Axios.js ***!
   \***********************************/
@@ -28073,12 +28269,12 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(/*! ./../defaults */ 242);
-	var utils = __webpack_require__(/*! ./../utils */ 238);
-	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 253);
-	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 254);
-	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 257);
-	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 258);
+	var defaults = __webpack_require__(/*! ./../defaults */ 243);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
+	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 254);
+	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 255);
+	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 258);
+	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 259);
 	
 	/**
 	 * Create a new instance of Axios
@@ -28160,7 +28356,7 @@
 
 
 /***/ },
-/* 242 */
+/* 243 */
 /*!*********************************!*\
   !*** ./~/axios/lib/defaults.js ***!
   \*********************************/
@@ -28168,8 +28364,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 238);
-	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 243);
+	var utils = __webpack_require__(/*! ./utils */ 239);
+	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 244);
 	
 	var DEFAULT_CONTENT_TYPE = {
 	  'Content-Type': 'application/x-www-form-urlencoded'
@@ -28185,10 +28381,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(/*! ./adapters/xhr */ 244);
+	    adapter = __webpack_require__(/*! ./adapters/xhr */ 245);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(/*! ./adapters/http */ 244);
+	    adapter = __webpack_require__(/*! ./adapters/http */ 245);
 	  }
 	  return adapter;
 	}
@@ -28262,7 +28458,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../process/browser.js */ 3)))
 
 /***/ },
-/* 243 */
+/* 244 */
 /*!****************************************************!*\
   !*** ./~/axios/lib/helpers/normalizeHeaderName.js ***!
   \****************************************************/
@@ -28270,7 +28466,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ../utils */ 238);
+	var utils = __webpack_require__(/*! ../utils */ 239);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -28283,7 +28479,7 @@
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /*!*************************************!*\
   !*** ./~/axios/lib/adapters/xhr.js ***!
   \*************************************/
@@ -28291,13 +28487,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
-	var settle = __webpack_require__(/*! ./../core/settle */ 245);
-	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 248);
-	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 249);
-	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 250);
-	var createError = __webpack_require__(/*! ../core/createError */ 246);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 251);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
+	var settle = __webpack_require__(/*! ./../core/settle */ 246);
+	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 249);
+	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 250);
+	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 251);
+	var createError = __webpack_require__(/*! ../core/createError */ 247);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 252);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -28394,7 +28590,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 252);
+	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 253);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -28473,7 +28669,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../process/browser.js */ 3)))
 
 /***/ },
-/* 245 */
+/* 246 */
 /*!************************************!*\
   !*** ./~/axios/lib/core/settle.js ***!
   \************************************/
@@ -28481,7 +28677,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(/*! ./createError */ 246);
+	var createError = __webpack_require__(/*! ./createError */ 247);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -28508,7 +28704,7 @@
 
 
 /***/ },
-/* 246 */
+/* 247 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/core/createError.js ***!
   \*****************************************/
@@ -28516,7 +28712,7 @@
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(/*! ./enhanceError */ 247);
+	var enhanceError = __webpack_require__(/*! ./enhanceError */ 248);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, request and response.
@@ -28535,7 +28731,7 @@
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /*!******************************************!*\
   !*** ./~/axios/lib/core/enhanceError.js ***!
   \******************************************/
@@ -28565,7 +28761,7 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/helpers/buildURL.js ***!
   \*****************************************/
@@ -28573,7 +28769,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -28642,7 +28838,7 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/helpers/parseHeaders.js ***!
   \*********************************************/
@@ -28650,7 +28846,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
 	
 	/**
 	 * Parse headers into an object
@@ -28688,7 +28884,7 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /*!************************************************!*\
   !*** ./~/axios/lib/helpers/isURLSameOrigin.js ***!
   \************************************************/
@@ -28696,7 +28892,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28765,7 +28961,7 @@
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/btoa.js ***!
   \*************************************/
@@ -28810,7 +29006,7 @@
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /*!****************************************!*\
   !*** ./~/axios/lib/helpers/cookies.js ***!
   \****************************************/
@@ -28818,7 +29014,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28872,7 +29068,7 @@
 
 
 /***/ },
-/* 253 */
+/* 254 */
 /*!************************************************!*\
   !*** ./~/axios/lib/core/InterceptorManager.js ***!
   \************************************************/
@@ -28880,7 +29076,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -28933,7 +29129,7 @@
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/core/dispatchRequest.js ***!
   \*********************************************/
@@ -28941,10 +29137,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
-	var transformData = __webpack_require__(/*! ./transformData */ 255);
-	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 256);
-	var defaults = __webpack_require__(/*! ../defaults */ 242);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
+	var transformData = __webpack_require__(/*! ./transformData */ 256);
+	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 257);
+	var defaults = __webpack_require__(/*! ../defaults */ 243);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -29021,7 +29217,7 @@
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/core/transformData.js ***!
   \*******************************************/
@@ -29029,7 +29225,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 238);
+	var utils = __webpack_require__(/*! ./../utils */ 239);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -29050,7 +29246,7 @@
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /*!****************************************!*\
   !*** ./~/axios/lib/cancel/isCancel.js ***!
   \****************************************/
@@ -29064,7 +29260,7 @@
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /*!**********************************************!*\
   !*** ./~/axios/lib/helpers/isAbsoluteURL.js ***!
   \**********************************************/
@@ -29087,7 +29283,7 @@
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /*!********************************************!*\
   !*** ./~/axios/lib/helpers/combineURLs.js ***!
   \********************************************/
@@ -29110,7 +29306,7 @@
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /*!**************************************!*\
   !*** ./~/axios/lib/cancel/Cancel.js ***!
   \**************************************/
@@ -29138,7 +29334,7 @@
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/cancel/CancelToken.js ***!
   \*******************************************/
@@ -29146,7 +29342,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(/*! ./Cancel */ 259);
+	var Cancel = __webpack_require__(/*! ./Cancel */ 260);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -29204,7 +29400,7 @@
 
 
 /***/ },
-/* 261 */
+/* 262 */
 /*!***************************************!*\
   !*** ./~/axios/lib/helpers/spread.js ***!
   \***************************************/
@@ -29238,158 +29434,6 @@
 	  };
 	};
 
-
-/***/ },
-/* 262 */
-/*!***********************************!*\
-  !*** ./src/components/Artist.jsx ***!
-  \***********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _axios = __webpack_require__(/*! axios */ 236);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Artist = function (_React$Component) {
-	    _inherits(Artist, _React$Component);
-	
-	    function Artist(props) {
-	        _classCallCheck(this, Artist);
-	
-	        var _this = _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).call(this, props));
-	
-	        _this.state = {
-	            artist: [],
-	            albums: []
-	        };
-	        _this.getArtist = _this.getArtist.bind(_this);
-	        _this.getAlbums = _this.getAlbums.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(Artist, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.getArtist();
-	        }
-	    }, {
-	        key: 'getArtist',
-	        value: function getArtist() {
-	            var _this2 = this;
-	
-	            _axios2.default.get('/getArtist').then(function (res) {
-	                var artist = res.data;
-	                _this2.setState({ artist: artist });
-	            }).catch(function (err) {
-	                return console.log('artist error :' + err);
-	            });
-	        }
-	    }, {
-	        key: 'getAlbums',
-	        value: function getAlbums() {
-	            _axios2.default.get('/getAlbums/' + this.state.artist.id)
-	            // .then(res => this.setState({ albums : res.data}))
-	            .then(function (res) {
-	                return console.log(res);
-	            })
-	            // .then(res => console.log(artistID))
-	            .catch(function (err) {
-	                return console.log('albums error :' + err + artist);
-	            });
-	        }
-	
-	        // listAlbums = this.state.albums.map((albums) =>
-	        // <div className='col-xs-12 col-sm-4 col-md-4 col-lg-3'>
-	        //     <div className='thumbnail text-center'>
-	        //         <a href='#'>
-	        //             <img src={'http://placehold.it/300x300'} alt={ 'Album name' } />
-	        //         </a>
-	        //         <div className='caption'>
-	        //             <h4>{ 'Album name' }</h4>
-	        //         </div>
-	        //     </div>
-	        // </div>
-	        // );
-	
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'container' },
-	                _react2.default.createElement(
-	                    'ol',
-	                    { className: 'breadcrumb' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '/' },
-	                            'Recherche'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { className: 'active' },
-	                        this.state.artist.id
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'page-header' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        'Albums'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        this.state.artist.name
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container albums' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'ul',
-	                            null,
-	                            this.listAlbums
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Artist;
-	}(_react2.default.Component);
-	
-	exports.default = Artist;
 
 /***/ },
 /* 263 */

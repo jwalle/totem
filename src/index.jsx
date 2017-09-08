@@ -18,7 +18,6 @@ render((
     <Route path="/" component={App}>
         <IndexRoute component={ Search } subreddit="reactjs"/>
         <Route path="artist" component={Artist} />
-        {/*<Route path="login" component={ Login } />*/}
         <Route path="album" component={ Album } />
         <Route path="*" component={ NotFoundPage } />
     </Route>
