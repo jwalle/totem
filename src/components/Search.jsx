@@ -1,5 +1,4 @@
 import React from 'react';
-// import SearchArtists from './FetchArtists.jsx';
 import axios from 'axios';
 
 class Search extends React.Component {
@@ -7,20 +6,23 @@ class Search extends React.Component {
         super(props);
         this.state = {
             artists: [],
-            search: ''
+            search: '',
+            currentPage: 1
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handlePageClick = this.handlePageClick.bind(this);
     }
 
-  //  componentWillMount() {
-        // this.getArtists();
-  //  }
+    handlePageClick(e) {
+        this.setState({
+            currentPage : Number(e.target.id)
+        });
+    }
 
     handleChange(e) {
-        console.log(e.target.value);
         const search = e.target.value;
         this.setState({search : search});
-        var self = this;
+        let self = this;
         axios({
             method: 'get',
             url: '/search/?q=' + search,
@@ -28,17 +30,31 @@ class Search extends React.Component {
         })
             .then(function (response) {
                 const artists = response.data.artists.items;
-                // console.log(response.data);
                 self.setState({artists:artists});
             })
             .catch(err => console.log('search error :' + err));
     };
 
     render() {
-        console.log(this.state.artists);
-        // console.log(this.state.artists['items']);
-        // console.log(this.state.artists.items);
-        // let elements = this.state.artists;
+        let {currentPage, artists} = this.state;
+        let pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(artists.length / 10); i++) {
+            pageNumbers.push(i);
+        }
+
+        let renderPages = pageNumbers.map (n => {
+            return (
+                <li><a
+                    key={n}
+                    id={n}
+                    onClick={this.handlePageClick}
+                    href='#'>{n}</a></li>
+            )
+        });
+        let lastIndex = currentPage * 10;
+        let firstIndex = lastIndex - 10;
+        firstIndex = firstIndex < 0 ? 0 : firstIndex;
+        let currentArtists = artists.slice(firstIndex, lastIndex);
         return (
         <div>
                 <div className='container'>
@@ -65,47 +81,26 @@ class Search extends React.Component {
                 </div>
 
                 <div className='container artists'>
-                    {this.state.artists.map(function(element, index){
-                        console.log(element.images);
+                    {currentArtists.map(function(element){
                         return (
-                            <div className='media'>
+                            <div className='media col-sm-6'>
                                 <div className='media-left'>
                                     <a href={'/artist/' + element.id}>
                                         <img
                                             className='media-object'
-                                            src={element.images[3] ? element.images[3].url : 'http://placehold.it/64x64'}
-                                            alt='*'/>
+                                            src={element.images[2] ? element.images[2].url : 'http://placehold.it/64x64'}
+                                            alt='*'
+                                            height="64"
+                                            width="64"/>
                                     </a>
                                 </div>
                                 <div className='media-body'>
                                     <h4 className='media-heading'>{element.name}</h4>
-                                    Artist genres
+                                    {element.genres[0]}
                                 </div>
                             </div>
                         );
                     })}
-                    <div className='media'>
-                        <div className='media-left'>
-                            <a href='#'>
-                                <img className='media-object' src='http://placehold.it/64x64' alt='*'/>
-                            </a>
-                        </div>
-                        <div className='media-body'>
-                            <h4 className='media-heading'>Artist name</h4>
-                            Artist genres
-                        </div>
-                    </div>
-                    <div className='media'>
-                        <div className='media-left'>
-                            <a href='#'>
-                                <img className='media-object' src='http://placehold.it/64x64' alt='*'/>
-                            </a>
-                        </div>
-                        <div className='media-body'>
-                            <h4 className='media-heading'>Artist name</h4>
-                            Artist genres
-                        </div>
-                    </div>
                 </div>
                 <div className='container text-center'>
                     <nav aria-label='Page navigation'>
@@ -115,11 +110,7 @@ class Search extends React.Component {
                                     <span aria-hidden='true'>&laquo;</span>
                                 </a>
                             </li>
-                            <li><a href='#'>1</a></li>
-                            <li><a href='#'>2</a></li>
-                            <li><a href='#'>3</a></li>
-                            <li><a href='#'>4</a></li>
-                            <li><a href='#'>5</a></li>
+                                {renderPages}
                             <li>
                                 <a href='#' aria-label='Next'>
                                     <span aria-hidden='true'>&raquo;</span>
