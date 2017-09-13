@@ -17,8 +17,6 @@ class Album extends React.Component {
         this.getAlbum();
     }
 
-
-
     convertTime(time) {
         let n = Math.round((time / 3600) % 60);
         n = n > 9 ? n : "0" + n;
@@ -44,18 +42,17 @@ class Album extends React.Component {
 
     render() {
         let self = this;
-        console.log(this.state.tracks);
        let listTracks = this.state.tracks.map(function(track, index){
            let time = self.convertTime(track.duration_ms);
            return (
-               <li className='list-group-item'>{index + 1}. {track.name} <span className='badge'>{time.min} : {time.sec}</span></li>
+               <li className='list-group-item' key={index}>{index + 1}. {track.name} <span className='badge'>{time.min} : {time.sec}</span></li>
             );}
         );
         return (
             <div className='container'>
                 <ol className='breadcrumb'>
                     <li><a href='/'>Recherche</a></li>
-                    <li><a href='#'>{ this.state.artist.name }</a></li>
+                    <li><a href={ '/artist/' + this.state.artist.id }>{ this.state.artist.name }</a></li>
                     <li className='active'>{ this.state.album.name }</li>
                 </ol>
                 <div className='page-header'>

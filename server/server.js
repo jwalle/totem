@@ -13,10 +13,12 @@ const app = express();
 app.use(express.static(path.join( __dirname, '../public')))
    .use(cookieParser());
 
-let client_id = '09f12c7365f84dcd886d04fdb5b1c590';
-let client_secret = 'b09b2f6c67884060ac98346ca8bd8427'; //TODO hide this
+const config = require('../config.json');
+let client_id = config.client_id;
+let client_secret = config.client_secrect;
+let token = '';
 
-function getToken() { //TODO hide in middleware
+function getToken() {
     return new Promise(function(resolve, error)
     {
         var authOptions = {
@@ -34,77 +36,89 @@ function getToken() { //TODO hide in middleware
                 resolve(body.access_token);
             }
             else {
-                error("error :" + error);
+                reject("error :" + error);
             }
         });
     });
 }
 
+let myToken = function (req, res, next){
+    if (!token) {
+        getToken()
+            .then((response) =>  {
+                console.log(response);
+                token = response;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    next();
+};
+
+app.use(myToken);
+
 app.get('/getArtist/:id', function (req, res) {
-    var self = req;
-    getToken()
-        .then(function (response) { //catch errors
-            var options = {
-                url: 'https://api.spotify.com/v1/artists/' + self.params.id,
+            let options = {
+                url: 'https://api.spotify.com/v1/artists/' + req.params.id,
                 headers: {
-                    'Authorization': 'Bearer ' + response
+                    'Authorization': 'Bearer ' + token
                 },
                 json: true
             };
             request.get(options, function (error, response, body) {
-                res.send(body);
+                if(!error && response.statusCode === 200)
+                    res.send(body);
+                else
+                    console.log("request error :", error);
             });
-        });
     });
 
 app.get('/getAlbums/:id', function (req, res) {
-    getToken().then(function(response){
-        var options = {
-            url: 'https://api.spotify.com/v1/artists/' + req.params.id + '/albums',
+        let options = {
+            url: 'https://api.spotify.com/v1/artists/' + req.params.id + '/albums?market=FR',
             headers: {
-                'Authorization': 'Bearer ' + response
+                'Authorization': 'Bearer ' + token
             },
             json: true
         };
         request.get(options, function(error, response, body) {
-            res.send(body);
-        });
-    });
+            if(!error && response.statusCode === 200)
+                res.send(body);
+            else
+                console.log("request error :", error);        });
 });
 
 app.get('/getAlbum/:id', function (req, res) {
-    getToken().then(function(response){
-        var options = {
+        let options = {
             url: 'https://api.spotify.com/v1/albums/' + req.params.id,
             headers: {
-                'Authorization': 'Bearer ' + response
+                'Authorization': 'Bearer ' + token
             },
             json: true
         };
         request.get(options, function(error, response, body) {
-            res.send(body);
-        });
-    });
+            if(!error && response.statusCode === 200)
+                res.send(body);
+            else
+                console.log("request error 2:", error);        });
 });
 
 app.get('/search', function (req, res) {
-    getToken().then(function(response){
-        var options = {
+        let options = {
             url: 'https://api.spotify.com/v1/search?q=' + req.query.q
             + '&type=artist&limit=50',
-      //       data: {
-            //     query: req.query.q,
-            //     type : 'artist'
-            // },
             headers: {
-                'Authorization': 'Bearer ' + response
+                'Authorization': 'Bearer ' + token
             },
             json: true
         };
         request.get(options, function(error, response, body) {
-            res.send(body);
+            if(!error && response.statusCode === 200)
+                res.send(body);
+            else
+                console.log("request error :", error);
         });
-    });
 });
 
 app.get('*', function (req, res) {

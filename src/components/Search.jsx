@@ -11,29 +11,42 @@ class Search extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePageClick = this.handlePageClick.bind(this);
+        this.handlePrevious = this.handlePrevious.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+    }
+
+    handlePrevious() {
+        this.setState({ currentPage : this.state.currentPage - 1 })
     }
 
     handlePageClick(e) {
-        this.setState({
-            currentPage : Number(e.target.id)
-        });
+        this.setState({ currentPage : Number(e.target.id) });
+    }
+
+    handleNext() {
+        this.setState({ currentPage : this.state.currentPage + 1 })
     }
 
     handleChange(e) {
         const search = e.target.value;
         this.setState({search : search});
+        if (!search) {
+            this.setState({artists: []});
+            return ;
+        }
         let self = this;
         axios({
             method: 'get',
             url: '/search/?q=' + search,
             responseType: 'json'
         })
-            .then(function (response) {
+            .then(response => {
                 const artists = response.data.artists.items;
                 self.setState({artists:artists});
             })
             .catch(err => console.log('search error :' + err));
     };
+
 
     render() {
         let {currentPage, artists} = this.state;
@@ -44,17 +57,20 @@ class Search extends React.Component {
 
         let renderPages = pageNumbers.map (n => {
             return (
-                <li><a
-                    key={n}
+                <li key={n}
+                ><a
                     id={n}
                     onClick={this.handlePageClick}
                     href='#'>{n}</a></li>
             )
         });
+
         let lastIndex = currentPage * 10;
         let firstIndex = lastIndex - 10;
         firstIndex = firstIndex < 0 ? 0 : firstIndex;
+
         let currentArtists = artists.slice(firstIndex, lastIndex);
+
         return (
         <div>
                 <div className='container'>
@@ -81,9 +97,11 @@ class Search extends React.Component {
                 </div>
 
                 <div className='container artists'>
-                    {currentArtists.map(function(element){
-                        return (
-                            <div className='media col-sm-6'>
+                    { !currentArtists[0] && (this.state.search.length > 1) ?
+                        <h1>Desole, pas d'artiste avec ce nom.</h1>
+                        : currentArtists.map(function(element,index){
+                            return (
+                            <div className='media col-sm-6' key={index}>
                                 <div className='media-left'>
                                     <a href={'/artist/' + element.id}>
                                         <img
@@ -105,17 +123,21 @@ class Search extends React.Component {
                 <div className='container text-center'>
                     <nav aria-label='Page navigation'>
                         <ul className='pagination'>
-                            <li>
-                                <a href='#' aria-label='Previous'>
-                                    <span aria-hidden='true'>&laquo;</span>
-                                </a>
-                            </li>
-                                {renderPages}
-                            <li>
-                                <a href='#' aria-label='Next'>
-                                    <span aria-hidden='true'>&raquo;</span>
-                                </a>
-                            </li>
+                            {currentPage > 1 ?
+                                <li key={1}>
+                                    <a href='#' onClick={this.handlePrevious} aria-label='Previous'>
+                                        <span aria-hidden='true'>&laquo;</span>
+                                    </a>
+                                </li>
+                            : ''}
+                            {renderPages}
+                            {currentPage < pageNumbers.length ?
+                                  <li key={1}>
+                                     <a href='#' onClick={this.handleNext} aria-label='Next'>
+                                         <span aria-hidden='true'>&raquo;</span>
+                                     </a>
+                                  </li>
+                            : ''}
                         </ul>
                     </nav>
                 </div>
