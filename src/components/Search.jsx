@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import RenderArtist from './RenderArtists.jsx';
 
 class Search extends React.Component {
     constructor(props) {
@@ -7,12 +8,19 @@ class Search extends React.Component {
         this.state = {
             artists: [],
             search: '',
-            currentPage: 1
+            currentPage: 1,
+            requestDone: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePageClick = this.handlePageClick.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
         this.handleNext = this.handleNext.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            requestDone: false
+        });
     }
 
     handlePrevious() {
@@ -42,11 +50,14 @@ class Search extends React.Component {
         })
             .then(response => {
                 const artists = response.data.artists.items;
-                self.setState({artists:artists});
+                self.setState({
+                    artists:artists,
+                    requestDone:true,
+                    currentPage:1
+                });
             })
             .catch(err => console.log('search error :' + err));
     };
-
 
     render() {
         let {currentPage, artists} = this.state;
@@ -64,12 +75,6 @@ class Search extends React.Component {
                     href='#'>{n}</a></li>
             )
         });
-
-        let lastIndex = currentPage * 10;
-        let firstIndex = lastIndex - 10;
-        firstIndex = firstIndex < 0 ? 0 : firstIndex;
-
-        let currentArtists = artists.slice(firstIndex, lastIndex);
 
         return (
         <div>
@@ -90,41 +95,19 @@ class Search extends React.Component {
                                         value={this.state.search}
                                     />
                                 </div>
-                                <button type='submit' className='btn btn-primary'>Chercher</button>
                             </form>
                         </div>
                     </div>
                 </div>
-
-                <div className='container artists'>
-                    { !currentArtists[0] && (this.state.search.length > 1) ?
-                        <h1>Desole, pas d'artiste avec ce nom.</h1>
-                        : currentArtists.map(function(element,index){
-                            return (
-                            <div className='media col-sm-6' key={index}>
-                                <div className='media-left'>
-                                    <a href={'/artist/' + element.id}>
-                                        <img
-                                            className='media-object'
-                                            src={element.images[2] ? element.images[2].url : 'http://placehold.it/64x64'}
-                                            alt='*'
-                                            height="64"
-                                            width="64"/>
-                                    </a>
-                                </div>
-                                <div className='media-body'>
-                                    <h4 className='media-heading'>{element.name}</h4>
-                                    {element.genres[0]}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                { this.state.requestDone &&
+                <RenderArtist currentPage={currentPage}
+                              artists={artists}
+                              search={this.state.search}/> }
                 <div className='container text-center'>
                     <nav aria-label='Page navigation'>
                         <ul className='pagination'>
                             {currentPage > 1 ?
-                                <li key={1}>
+                                <li>
                                     <a href='#' onClick={this.handlePrevious} aria-label='Previous'>
                                         <span aria-hidden='true'>&laquo;</span>
                                     </a>
@@ -132,7 +115,7 @@ class Search extends React.Component {
                             : ''}
                             {renderPages}
                             {currentPage < pageNumbers.length ?
-                                  <li key={1}>
+                                  <li>
                                      <a href='#' onClick={this.handleNext} aria-label='Next'>
                                          <span aria-hidden='true'>&raquo;</span>
                                      </a>
@@ -145,4 +128,5 @@ class Search extends React.Component {
         );
     }
 }
+
 export default Search;

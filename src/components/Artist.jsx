@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import NotFound from './NotFound.jsx';
 
 class Artist extends React.Component {
     constructor(props) {
@@ -37,6 +38,10 @@ class Artist extends React.Component {
     }
 
     render() {
+        if (!this.state.albums.length) {
+            return (<NotFound text="artist"/>);
+        }
+
         let listAlbums = this.state.albums.map(function(album, index){
             return (
                 <div className='col-xs-12 col-sm-4 col-md-4 col-lg-3' key={index}>

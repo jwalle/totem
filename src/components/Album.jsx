@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import NotFound from './NotFound.jsx';
+
 
 class Album extends React.Component {
     constructor(props) {
@@ -36,11 +38,13 @@ class Album extends React.Component {
                 artist : res.data.artists[0],
                 tracks: res.data.tracks.items
             }))
-            // .then(res => console.log(res.data.artists[0]))
             .catch(err => console.log('album error :' + err));
     }
 
     render() {
+        if (!this.state.tracks.length) {
+            return (<NotFound text="Album"/>);
+        }
         let self = this;
        let listTracks = this.state.tracks.map(function(track, index){
            let time = self.convertTime(track.duration_ms);
