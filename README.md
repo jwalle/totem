@@ -4,6 +4,8 @@ Le but de ce test est de mettre en place une single page App utilisant l'API Spo
 
 J'ai utilisé un backend Node.js/express et un frontend en React.js.
 
+![]('https://i.imgur.com/lzNlFDt.png' | width=200)
+
 #### Pour installer les dépendances:
 
 ```
